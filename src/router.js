@@ -2,7 +2,7 @@ const express = require("express");
 const userRouter = require("./user/routes");
 const noteRouter = require("./notes/routes");
 const cors = require("cors");
-const authMiddleware = require("./middleWare");
+const authMiddleware = require("./middleware");
 
 const router = express.Router();
 const app = express();

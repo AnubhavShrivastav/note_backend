@@ -18,7 +18,7 @@ app.use(express.json());
 // login user
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
-
+ try{
   const user = await User.findOne({ email });
   if (!user) return res.status(400).json({ msg: "Invalid email" });
 
@@ -37,6 +37,9 @@ router.post("/login", async (req, res) => {
       createdAt: user.createdAt,
     },
   })
+} catch (err) {
+  res.status(500).json({ msg: 'Server error' });
+}
   
 });
 
