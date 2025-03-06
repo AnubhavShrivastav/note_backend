@@ -18,29 +18,28 @@ app.use(express.json());
 // login user
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
- try{
-  const user = await User.findOne({ email });
-  if (!user) return res.status(400).json({ msg: "Invalid email" });
+  try {
+    const user = await User.findOne({ email });
+    if (!user) return res.status(400).json({ msg: "Invalid email" });
 
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) return res.status(400).json({ msg: "Invalid password" });
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(400).json({ msg: "Invalid password" });
 
-  const token = jwt.sign({ user }, CONSTANTS.JWT_SECRET, { expiresIn: "7d" });
+    const token = jwt.sign({ user }, CONSTANTS.JWT_SECRET, { expiresIn: "7d" });
 
-  return res.json({
-    message: "Login successful",
-    token,
-    user: {
-      id: user._id,
-      name: user.name,
-      email: user.email,
-      createdAt: user.createdAt,
-    },
-  })
-} catch (err) {
-  res.status(500).json({ msg: 'Server error' });
-}
-  
+    return res.json({
+      message: "Login successful",
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        createdAt: user.createdAt,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ msg: "Server error" });
+  }
 });
 
 // Register a new user
@@ -50,7 +49,7 @@ router.post("/", async (req, res) => {
   try {
     //  Check if user already exists
     let user = await User.findOne({ email });
-    if (user) return res.status(400).json({ msg: 'User already exists' });
+    if (user) return res.status(400).json({ msg: "User already exists" });
 
     //  Hash Password
     const salt = await bcrypt.genSalt(10);
@@ -68,7 +67,7 @@ router.post("/", async (req, res) => {
     await user.save();
 
     //  Generate JWT Token
-    const token = jwt.sign({user }, CONSTANTS.JWT_SECRET, { expiresIn: '7d' });
+    const token = jwt.sign({ user }, CONSTANTS.JWT_SECRET, { expiresIn: "7d" });
 
     //  Return user details & token
     res.json({
@@ -81,9 +80,8 @@ router.post("/", async (req, res) => {
         createdAt: user.createdAt,
       },
     });
-
   } catch (err) {
-    res.status(500).json({ msg: 'Server error' });
+    res.status(500).json({ msg: "Server error" });
   }
 });
 

@@ -1,17 +1,16 @@
 const mongoose = require("mongoose");
-const getRandomColor = require("../colorUtils");
 const NoteSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Types.ObjectId,
-      ref: "user", // Reference to User model
+      ref: "User", // Reference to User model
       required: true,
     },
 
     description: { type: String, required: true },
     color: {
       type: String,
-      default: getRandomColor, // Optional color field
+      immutable: true, // This prevents color from changing on updates
     },
 
     createdAt: { type: Date, default: Date.now },

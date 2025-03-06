@@ -2,7 +2,6 @@ const express = require("express");
 const Note = require("./desc");
 const router = express.Router();
 const cors = require("cors");
-const getRandomColor = require("../colorUtils");
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -13,7 +12,7 @@ router.post("/", async (req, res) => {
     console.log("🔍 Incoming Data:", req.body);
     console.log("User ID:", req.user);
 
-    const { description } = req.body;
+    const { description, color } = req.body;
 
     if (!description)
       return res.status(400).json({ error: "⚠️ Description is required!" });
@@ -22,7 +21,7 @@ router.post("/", async (req, res) => {
       user: req.user.user._id,
       description,
       createdAt: new Date(),
-      color: getRandomColor(),
+      color,
     });
     await newNote.save();
     console.log(newNote);
@@ -36,8 +35,10 @@ router.post("/", async (req, res) => {
 // Get all note
 router.get("/", async (req, res) => {
   try {
-    const notes = await Note.find({ user: req.user.user._id, deletedAt: null });
-    //.populate('user');
+    const notes = await Note.find({
+      user: req.user.user._id,
+      deletedAt: null,
+    }).populate("user", "name email");
     console.log("📄 Notes fetched:", notes); // Debugging
     res.status(200).json(notes);
   } catch (error) {
