@@ -9,7 +9,7 @@ const { CONSTANTS } = require("./src/constants");
 
 const app = express();
 app.use(cors({
-  origin: "https://note-meapp.netlify.app",
+  origin: "*",
   credentials: true
 }));
 
