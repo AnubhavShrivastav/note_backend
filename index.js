@@ -8,7 +8,11 @@ const routes = require("./src/router");
 const { CONSTANTS } = require("./src/constants");
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: "https://note-meapp.netlify.app",
+  credentials: true
+}));
+
 app.use(express.json());
 app.use(bodyParser.json());
 
