@@ -1,10 +1,9 @@
 const express = require("express");
 const Note = require("./desc");
 const router = express.Router();
-const cors = require("cors");
 const app = express();
 app.use(express.json());
-app.use(cors());
+
 
 // 📌 POST API to Save Notes in MongoDB
 router.post("/", async (req, res) => {
