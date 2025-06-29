@@ -8,12 +8,9 @@ const routes = require("./src/router");
 const { CONSTANTS } = require("./src/constants");
 
 const app = express();
-app.use(cors({
-  origin: "*",
-  credentials: true
-}));
-
 app.use(express.json());
+app.use(cors());
+
 app.use(bodyParser.json());
 
 app.use("/", routes);
