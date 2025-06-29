@@ -103,19 +103,8 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+
 // Delete a user
-// router.delete("/:id", async (req, res) => {
-//   const { id } = req.params;
-
-//   try {
-//     const user = await User.findByIdAndDelete(id,{ deletedAt: new Date() },{ new: true });
-//     res.send({message: 'User deleted', user});
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send(error);
-//   }
-// });
-
 router.delete("/:id", async (req, res) => {
   try {
     const user = await User.findByIdAndUpdate(
