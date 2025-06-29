@@ -1,17 +1,16 @@
 require('dotenv').config();
-require('constants')
 const express = require("express");
 const cors = require("cors");
-const bodyParser = require("body-parser");
 const db = require("./src/db");
 const routes = require("./src/router");
 const { CONSTANTS } = require("./src/constants");
 
 const app = express();
 app.use(express.json());
-app.use(cors());
-
-app.use(bodyParser.json());
+app.use(cors({
+  origin: "https://note-meapp.netlify.app",
+  credentials: true
+}));
 
 app.use("/", routes);
 
